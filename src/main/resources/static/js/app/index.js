@@ -1,5 +1,5 @@
 const main = {
-    init: function() {
+    init() {
         let _this = this;
         $('#btn-save').on('click', () => {
             _this.save();
@@ -8,9 +8,13 @@ const main = {
         $("#btn-update").on('click', () => {
             _this.update();
         })
+
+        $("#btn-delete").on('click', () => {
+            _this.delete();
+        })
     },
 
-    save: function() {
+    save() {
         let data = {
             title: $('#title').val(),
             author: $('#author').val(),
@@ -31,7 +35,7 @@ const main = {
         })
     },
 
-    update: function() {
+    update() {
         const data = {
             title: $("#title").val(),
             content: $("#content").val(),
@@ -47,6 +51,22 @@ const main = {
             data: JSON.stringify(data)
         }).done(() => {
             alert('글이 수정되었습니다.');
+            window.location.href = "/";
+        }).fail((error) => {
+            alert(JSON.stringify(error));
+        })
+    },
+
+    delete() {
+        const id = $("#id").val();
+
+        $.ajax({
+            type: "DELETE",
+            url: `/api/v1/posts/${id}`,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+        }).done(() => {
+            alert('글이 삭제되었습니다.');
             window.location.href = "/";
         }).fail((error) => {
             alert(JSON.stringify(error));
