@@ -1,7 +1,7 @@
 package com.sj.book.springboot.domain.posts;
 
-import org.assertj.core.api.Assertions;
-import org.junit.After;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -25,13 +25,13 @@ class PostsRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
-    @After
+    @AfterEach
     public void cleanup() {
         postsRepository.deleteAll();
     }
 
     @Test
-    @DisplayName("게시글저장 불로오기")
+    @DisplayName("게시글저장 불러오기")
     public void 게시글저장_불러오기() {
         //given 데이터가 주어지고, 저장이 됨
         String title = "테스트 게시글";

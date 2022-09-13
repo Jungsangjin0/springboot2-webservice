@@ -108,7 +108,7 @@ class PostsApiControllerTest {
     @Test
     @DisplayName("게시판이 수정된다.")
     @WithMockUser(roles = "USER")
-    public void Posts_수정된다() throws Exception{
+    public void Posts_수정된다() throws Exception {
         //given saved data
         Posts savedPosts = postsRepository.save(Posts.builder()
                                           .title("title")
