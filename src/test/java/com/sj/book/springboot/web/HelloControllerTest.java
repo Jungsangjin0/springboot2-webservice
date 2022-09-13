@@ -1,10 +1,15 @@
 package com.sj.book.springboot.web;
 
+import com.sj.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Role;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -14,7 +19,11 @@ import static org.hamcrest.Matchers.is;
 
 
 @RunWith(SpringRunner.class) // Junit에 내장된 실행자 외에 다른 실행자로 실행시킨다. ::SpringRunner
-@WebMvcTest(controllers = HelloController.class) //Web(Spring MVC)에 집중할 수 있는 어노테이션
+@WebMvcTest(controllers = HelloController.class,
+    excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+            classes = {SecurityConfig.class})
+}) //Web(Spring MVC)에 집중할 수 있는 어노테이션
     //선언할 경우 @controller, @controllerAdvice 사용가능
 public class HelloControllerTest {
 
@@ -23,6 +32,7 @@ public class HelloControllerTest {
 
     @Test
     @DisplayName("hello 문자열이 리턴된다.")
+    @WithMockUser(roles = "USER")
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
 
@@ -37,6 +47,7 @@ public class HelloControllerTest {
      */
     @Test
     @DisplayName("helloDto가 리턴된다")
+    @WithMockUser(roles = "USER")
     public void helloDto가_리턴된다() throws Exception {
 
         String name = "hello";
